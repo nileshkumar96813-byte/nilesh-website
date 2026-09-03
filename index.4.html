@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nilesh Kumar UP61 - Money Converter</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#e8f1ff,#ffffff);
+  color:#172b4d;
+}
+
+.container{
+  max-width:650px;
+  margin:20px auto;
+  padding:15px;
+}
+
+.card{
+  background:white;
+  border-radius:24px;
+  padding:25px;
+  box-shadow:0 15px 45px rgba(0,0,0,.12);
+}
+
+/* =========================
+   NILESH KUMAR UP61 LOGO
+========================= */
+
+.logo-wrap{
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.logo{
+  width:82px;
+  height:82px;
+  margin:auto;
+  border-radius:22px;
+  background:linear-gradient(135deg,#155eef,#7c3aed);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 10px 25px rgba(21,94,239,.30);
+}
+
+.logo .nk{
+  font-size:30px;
+  font-weight:900;
+  line-height:30px;
+}
+
+.logo .up61{
+  font-size:14px;
+  font-weight:bold;
+  margin-top:3px;
+  letter-spacing:2px;
+}
+
+h1{
+  text-align:center;
+  margin:8px 0 4px;
+  font-size:30px;
+}
+
+.brand{
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  color:#155eef;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#667085;
+  margin-bottom:25px;
+}
+
+.box{
+  margin-bottom:18px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+input,
+select,
+button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ccd5e0;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#155eef;
+  box-shadow:0 0 0 3px rgba(21,94,239,.10);
+}
+
+.currency-row{
+  display:grid;
+  grid-template-columns:1fr 60px 1fr;
+  gap:10px;
+  align-items:end;
+}
+
+.swap{
+  height:50px;
+  cursor:pointer;
+  font-size:25px;
+  background:#eef4ff;
+  color:#155eef;
+  font-weight:bold;
+}
+
+.swap:hover{
+  background:#dbe8ff;
+}
+
+.convert{
+  margin-top:18px;
+  border:0;
+  background:linear-gradient(135deg,#155eef,#7c3aed);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:17px;
+}
+
+.convert:hover{
+  opacity:.92;
+}
+
+.result{
+  margin-top:22px;
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+  background:#f1f7ff;
+}
+
+.output{
+  font-size:30px;
+  font-weight:800;
+  word-break:break-word;
+}
+
+.rate{
+  margin-top:10px;
+  color:#475467;
+}
+
+.status{
+  margin-top:10px;
+  font-size:13px;
+  color:#667085;
+}
+
+.success{
+  color:#067647;
+}
+
+.error{
+  color:#b42318;
+}
+
+.footer{
+  text-align:center;
+  margin-top:20px;
+  font-size:13px;
+  color:#667085;
+}
+
+.footer-brand{
+  font-size:16px;
+  font-weight:bold;
+  color:#155eef;
+  margin-top:8px;
+}
+
+@media(max-width:600px){
+
+  .container{
+    margin:5px auto;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+  .currency-row{
+    grid-template-columns:1fr;
+  }
+
+  .swap{
+    width:100%;
+    height:45px;
+  }
+
+  .output{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<!-- NILESH KUMAR UP61 LOGO -->
+<div class="logo-wrap">
+  <div class="logo">
+    <div class="nk">NK</div>
+    <div class="up61">UP61</div>
+  </div>
+</div>
+
+<h1>Money Converter</h1>
+
+<div class="brand">
+  Nilesh Kumar UP61
+</div>
+
+<div class="subtitle">
+  Global Currency Converter
+</div>
+
+
+<!-- AMOUNT -->
+
+<div class="box">
+
+<label for="amount">
+Amount
+</label>
+
+<input
+id="amount"
+type="number"
+min="0"
+step="any"
+value="100"
+placeholder="Amount डालें"
+>
+
+</div>
+
+
+<!-- CURRENCIES -->
+
+<div class="currency-row">
+
+<div>
+
+<label for="from">
+From
+</label>
+
+<select id="from"></select>
+
+</div>
+
+
+<div>
+
+<button
+id="swap"
+class="swap"
+type="button"
+>
+⇄
+</button>
+
+</div>
+
+
+<div>
+
+<label for="to">
+To
+</label>
+
+<select id="to"></select>
+
+</div>
+
+</div>
+
+
+<!-- BUTTON -->
+
+<button
+id="convert"
+class="convert"
+type="button"
+>
+Convert Money
+</button>
+
+
+<!-- RESULT -->
+
+<div class="result">
+
+<div
+id="output"
+class="output"
+>
+100 INR
+</div>
+
+<div
+id="rate"
+class="rate"
+>
+</div>
+
+<div
+id="status"
+class="status"
+>
+Ready
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+🌍 Live Currency Converter
+
+<div class="footer-brand">
+Nilesh Kumar UP61
+</div>
+
+<br>
+
+Exchange rates by Frankfurter API
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   FRANKFURTER V2 API
+========================================= */
+
+const API =
+"https://api.frankfurter.dev/v2";
+
+
+/* =========================================
+   CURRENCY LIST
+========================================= */
+
+const currencies = {
+
+AED:"UAE Dirham",
+AFN:"Afghan Afghani",
+ALL:"Albanian Lek",
+AMD:"Armenian Dram",
+ANG:"Netherlands Antillean Guilder",
+AOA:"Angolan Kwanza",
+ARS:"Argentine Peso",
+AUD:"Australian Dollar",
+AWG:"Aruban Florin",
+AZN:"Azerbaijani Manat",
+BAM:"Bosnia-Herzegovina Convertible Mark",
+BBD:"Barbadian Dollar",
+BDT:"Bangladeshi Taka",
+BGN:"Bulgarian Lev",
+BHD:"Bahraini Dinar",
+BIF:"Burundian Franc",
+BMD:"Bermudian Dollar",
+BND:"Brunei Dollar",
+BOB:"Bolivian Boliviano",
+BRL:"Brazilian Real",
+BSD:"Bahamian Dollar",
+BTN:"Bhutanese Ngultrum",
+BWP:"Botswana Pula",
+BYN:"Belarusian Ruble",
+BZD:"Belize Dollar",
+CAD:"Canadian Dollar",
+CDF:"Congolese Franc",
+CHF:"Swiss Franc",
+CLP:"Chilean Peso",
+CNY:"Chinese Yuan",
+COP:"Colombian Peso",
+CRC:"Costa Rican Colón",
+CUP:"Cuban Peso",
+CVE:"Cape Verdean Escudo",
+CZK:"Czech Koruna",
+DJF:"Djiboutian Franc",
+DKK:"Danish Krone",
+DOP:"Dominican Peso",
+DZD:"Algerian Dinar",
+EGP:"Egyptian Pound",
+ERN:"Eritrean Nakfa",
+ETB:"Ethiopian Birr",
+EUR:"Euro",
+FJD:"Fijian Dollar",
+FKP:"Falkland Islands Pound",
+GBP:"British Pound",
+GEL:"Georgian Lari",
+GHS:"Ghanaian Cedi",
+GIP:"Gibraltar Pound",
+GMD:"Gambian Dalasi",
+GNF:"Guinean Franc",
+GTQ:"Guatemalan Quetzal",
+GYD:"Guyanese Dollar",
+HKD:"Hong Kong Dollar",
+HNL:"Honduran Lempira",
+HRK:"Croatian Kuna",
+HTG:"Haitian Gourde",
+HUF:"Hungarian Forint",
+IDR:"Indonesian Rupiah",
+ILS:"Israeli New Shekel",
+INR:"Indian Rupee",
+IQD:"Iraqi Dinar",
+IRR:"Iranian Rial",
+ISK:"Icelandic Króna",
+JMD:"Jamaican Dollar",
+JOD:"Jordanian Dinar",
+JPY:"Japanese Yen",
+KES:"Kenyan Shilling",
+KGS:"Kyrgyzstani Som",
+KHR:"Cambodian Riel",
+KMF:"Comorian Franc",
+KPW:"North Korean Won",
+KRW:"South Korean Won",
+KWD:"Kuwaiti Dinar",
+KYD:"Cayman Islands Dollar",
+KZT:"Kazakhstani Tenge",
+LAK:"Lao Kip",
+LBP:"Lebanese Pound",
+LKR:"Sri Lankan Rupee",
+LRD:"Liberian Dollar",
+LSL:"Lesotho Loti",
+LYD:"Libyan Dinar",
+MAD:"Moroccan Dirham",
+MDL:"Moldovan Leu",
+MGA:"Malagasy Ariary",
+MKD:"Macedonian Denar",
+MMK:"Myanmar Kyat",
+MNT:"Mongolian Tögrög",
+MOP:"Macanese Pataca",
+MRU:"Mauritanian Ouguiya",
+MUR:"Mauritian Rupee",
+MVR:"Maldivian Rufiyaa",
+MWK:"Malawian Kwacha",
+MXN:"Mexican Peso",
+MYR:"Malaysian Ringgit",
+MZN:"Mozambican Metical",
+NAD:"Namibian Dollar",
+NGN:"Nigerian Naira",
+NIO:"Nicaraguan Córdoba",
+NOK:"Norwegian Krone",
+NPR:"Nepalese Rupee",
+NZD:"New Zealand Dollar",
+OMR:"Omani Rial",
+PAB:"Panamanian Balboa",
+PEN:"Peruvian Sol",
+PGK:"Papua New Guinean Kina",
+PHP:"Philippine Peso",
+PKR:"Pakistani Rupee",
+PLN:"Polish Zloty",
+PYG:"Paraguayan Guarani",
+QAR:"Qatari Riyal",
+RON:"Romanian Leu",
+RSD:"Serbian Dinar",
+RUB:"Russian Ruble",
+RWF:"Rwandan Franc",
+SAR:"Saudi Riyal",
+SBD:"Solomon Islands Dollar",
+SCR:"Seychellois Rupee",
+SDG:"Sudanese Pound",
+SEK:"Swedish Krona",
+SGD:"Singapore Dollar",
+SHP:"Saint Helena Pound",
+SLE:"Sierra Leonean Leone",
+SOS:"Somali Shilling",
+SRD:"Surinamese Dollar",
+SSP:"South Sudanese Pound",
+STN:"São Tomé and Príncipe Dobra",
+SVC:"Salvadoran Colón",
+SYP:"Syrian Pound",
+SZL:"Eswatini Lilangeni",
+THB:"Thai Baht",
+TJS:"Tajikistani Somoni",
+TMT:"Turkmenistani Manat",
+TND:"Tunisian Dinar",
+TOP:"Tongan Paʻanga",
+TRY:"Turkish Lira",
+TTD:"Trinidad and Tobago Dollar",
+TWD:"New Taiwan Dollar",
+TZS:"Tanzanian Shilling",
+UAH:"Ukrainian Hryvnia",
+UGX:"Ugandan Shilling",
+USD:"US Dollar",
+UYU:"Uruguayan Peso",
+UZS:"Uzbekistani Som",
+VES:"Venezuelan Bolívar",
+VND:"Vietnamese Dong",
+VUV:"Vanuatu Vatu",
+WST:"Samoan Tala",
+XAF:"Central African CFA Franc",
+XCD:"East Caribbean Dollar",
+XOF:"West African CFA Franc",
+XPF:"CFP Franc",
+YER:"Yemeni Rial",
+ZAR:"South African Rand",
+ZMW:"Zambian Kwacha",
+ZWL:"Zimbabwean Dollar"
+};
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const from =
+document.getElementById("from");
+
+const to =
+document.getElementById("to");
+
+const amount =
+document.getElementById("amount");
+
+const output =
+document.getElementById("output");
+
+const rate =
+document.getElementById("rate");
+
+const status =
+document.getElementById("status");
+
+const convertBtn =
+document.getElementById("convert");
+
+const swapBtn =
+document.getElementById("swap");
+
+
+/* =========================================
+   LOAD CURRENCIES
+========================================= */
+
+function loadCurrencies(){
+
+from.innerHTML = "";
+to.innerHTML = "";
+
+const codes =
+Object.keys(currencies).sort();
+
+codes.forEach(code => {
+
+const option1 =
+document.createElement("option");
+
+option1.value = code;
+
+option1.textContent =
+code + " — " + currencies[code];
+
+
+const option2 =
+document.createElement("option");
+
+option2.value = code;
+
+option2.textContent =
+code + " — " + currencies[code];
+
+from.appendChild(option1);
+
+to.appendChild(option2);
+
+});
+
+
+from.value = "USD";
+to.value = "INR";
+
+status.innerHTML =
+'<span class="success">✓ Currency list ready</span>';
+
+}
+
+
+/* =========================================
+   CONVERT MONEY
+========================================= */
+
+async function convertMoney(){
+
+const value =
+Number(amount.value);
+
+const base =
+from.value;
+
+const quote =
+to.value;
+
+
+if(
+!Number.isFinite(value) ||
+value < 0
+){
+
+output.textContent =
+"Amount सही डालें";
+
+rate.textContent = "";
+
+status.innerHTML =
+'<span class="error">Invalid amount</span>';
+
+return;
+
+}
+
+
+if(base === quote){
+
+output.textContent =
+value.toLocaleString() +
+" " +
+quote;
+
+rate.textContent =
+"1 " + base + " = 1 " + quote;
+
+status.innerHTML =
+'<span class="success">✓ Same Currency</span>';
+
+return;
+
+}
+
+
+output.textContent =
+"Loading...";
+
+rate.textContent = "";
+
+status.textContent =
+"Live rate प्राप्त हो रहा है...";
+
+
+try{
+
+const url =
+API +
+"/rate/" +
+base +
+"/" +
+quote;
+
+
+const response =
+await fetch(
+url,
+{
+cache:"no-store"
+}
+);
+
+
+if(!response.ok){
+
+throw new Error("API error");
+
+}
+
+
+const data =
+await response.json();
+
+
+if(
+typeof data.rate !== "number"
+){
+
+throw new Error(
+"Rate नहीं मिला"
+);
+
+}
+
+
+const result =
+value * data.rate;
+
+
+output.textContent =
+result.toLocaleString(
+undefined,
+{
+maximumFractionDigits:6
+}
+)
++
+" "
++
+quote;
+
+
+rate.textContent =
+"1 " +
+base +
+" = " +
+data.rate +
+" " +
+quote;
+
+
+status.innerHTML =
+'<span class="success">✓ Live Rate • ' +
+(data.date || "") +
+'</span>';
+
+}
+
+catch(error){
+
+console.error(error);
+
+output.textContent =
+"Rate नहीं मिला";
+
+rate.textContent = "";
+
+status.innerHTML =
+'<span class="error">' +
+"⚠️ Internet/API connection check करें." +
+"</span>";
+
+}
+
+}
+
+
+/* =========================================
+   CONVERT BUTTON
+========================================= */
+
+convertBtn.addEventListener(
+"click",
+convertMoney
+);
+
+
+/* =========================================
+   SWAP
+========================================= */
+
+swapBtn.addEventListener(
+"click",
+function(){
+
+const temp =
+from.value;
+
+from.value =
+to.value;
+
+to.value =
+temp;
+
+convertMoney();
+
+}
+);
+
+
+/* =========================================
+   CURRENCY CHANGE
+========================================= */
+
+from.addEventListener(
+"change",
+convertMoney
+);
+
+to.addEventListener(
+"change",
+convertMoney
+);
+
+
+/* =========================================
+   AMOUNT INPUT
+========================================= */
+
+amount.addEventListener(
+"input",
+function(){
+
+clearTimeout(
+window.timer
+);
+
+window.timer =
+setTimeout(
+convertMoney,
+500
+);
+
+}
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+loadCurrencies();
+
+convertMoney();
+
+</script>
+
+</body>
+</html>
